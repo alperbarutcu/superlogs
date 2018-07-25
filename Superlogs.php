@@ -1,5 +1,5 @@
 <?php
-$hostaddr = ""; //your mysql url => for example localhost
+$hostaddr = ''; //your mysql url => for example localhost
 $dbname   = ''; ///your mysql db name
 $username = ''; //your mysql username
 $password = ''; //your mysql password
