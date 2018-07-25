@@ -22,13 +22,12 @@ function full_url($s, $use_forwarded_host = false)
 $absolute_url = full_url($_SERVER);
 $extension    = pathinfo($absolute_url, PATHINFO_EXTENSION);
 
-if (1 == 1 && !isset($_COOKIE['ghost'])) {
     
     try {
         $db = new PDO("mysql:host=" . $hostaddr . ";dbname=" . $dbname, $username, $password);
     }
     catch (PDOException $e) {
-        
+        //print $e->getMessage();  //is there any problem? open this line
     }
     
     function get_client_ip()
@@ -49,10 +48,7 @@ if (1 == 1 && !isset($_COOKIE['ghost'])) {
         else
             $ipaddress = 'UNKNOWN';
         return $ipaddress;
-    }
-    
-    
-    
+    }    
     function recursive_print($array, $m = '')
     {
         $m .= "\n";
@@ -68,8 +64,8 @@ if (1 == 1 && !isset($_COOKIE['ghost'])) {
         }
         return $m;
     }    
-    $gets  = recursive_print($_GET);// get
-    $posts = recursive_print($_POST); //   
+    $gets  = recursive_print($_GET);
+    $posts = recursive_print($_POST);  
     $query  = $db->prepare("INSERT INTO `superlogs` (`id`,  `userip`, `timestamp`, `url`,`posts`, `gets`) VALUES (NULL,  :userip, :timestamp, :url,  :posts, :gets);");
     $insert = $query->execute(array(
         ":userip" => get_client_ip(),
@@ -78,15 +74,10 @@ if (1 == 1 && !isset($_COOKIE['ghost'])) {
         ":posts" => $posts,
         ":gets" => $gets
     ));
-    /*     //is there any problem? open this block 
-    if ( $insert ){
-    $last_id = $db->lastInsertId();
-    }else{
-    echo 'hata'; 
+    /*     
+    //is there any problem? open this block 
+    if ( !$insert ){
     print_r($db->errorInfo()); 
-    }*/
-    $db     = null;
-    
-}
-
-?>
+    }
+    */
+    $db     = null;?>
